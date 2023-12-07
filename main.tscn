@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://cq2lsvd2qivem"]
+
+[ext_resource type="Texture2D" uid="uid://usqecm6j3x76" path="res://background.jpg" id="1_0gjb5"]
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="2_bgx27"]
+[ext_resource type="Texture2D" uid="uid://bhykfweolvveu" path="res://Grey Off.png" id="4_q7gta"]
+[ext_resource type="Texture2D" uid="uid://dxg8d3e7tbfi7" path="res://Checkpoint (No Flag).png" id="4_t1l47"]
+[ext_resource type="Script" path="res://CollisionShape2Dball.gd" id="5_q4qgy"]
+[ext_resource type="Texture2D" uid="uid://cx143voxuvq0u" path="res://ball.png" id="6_0yk4w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr6s4"]
+size = Vector2(3, 67)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f1lyj"]
+radius = 13.0
+
+[sub_resource type="GDScript" id="GDScript_ncxvb"]
+script/source = "extends Label
+
+
+func _process(delta):
+	self.text = str(Global.score)
+	pass
+"
+
+[node name="Node" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1084.0
+offset_top = -269.0
+offset_right = 1444.0
+offset_bottom = 1323.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_0gjb5")
+stretch_mode = 1
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(214.813, 313.399)
+script = ExtResource("2_bgx27")
+
+[node name="Checkpoint(noFlag)" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(10.1875, -122.399)
+scale = Vector2(1, 1.5)
+texture = ExtResource("4_t1l47")
+
+[node name="GreyOff" type="Sprite2D" parent="CharacterBody2D"]
+position = Vector2(0.187469, -0.398743)
+rotation = -1.5708
+scale = Vector2(4.59375, 2.375)
+texture = ExtResource("4_q7gta")
+
+[node name="Rod" type="Area2D" parent="CharacterBody2D"]
+
+[node name="CollisionShape2Dstick" type="CollisionShape2D" parent="CharacterBody2D/Rod"]
+position = Vector2(1.687, -107.899)
+shape = SubResource("RectangleShape2D_nr6s4")
+debug_color = Color(0.266667, 0.560784, 0.792157, 0.419608)
+
+[node name="Ball" type="Area2D" parent="."]
+position = Vector2(215, 314)
+
+[node name="CollisionShape2Dball" type="CollisionShape2D" parent="Ball"]
+position = Vector2(-118, 1)
+shape = SubResource("CircleShape2D_f1lyj")
+script = ExtResource("5_q4qgy")
+
+[node name="TextureRect" type="TextureRect" parent="Ball/CollisionShape2Dball"]
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 9.0
+texture = ExtResource("6_0yk4w")
+expand_mode = 1
+
+[node name="Score" type="Label" parent="."]
+offset_left = 257.0
+offset_top = 21.0
+offset_right = 397.0
+offset_bottom = 63.0
+script = SubResource("GDScript_ncxvb")
+
+[connection signal="area_shape_entered" from="CharacterBody2D/Rod" to="CharacterBody2D" method="_on_rod_area_shape_entered"]
+[connection signal="body_entered" from="CharacterBody2D/Rod" to="CharacterBody2D" method="_on_rod_body_entered"]

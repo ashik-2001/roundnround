@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcvebko3da0gt"]
+
+[ext_resource type="Texture2D" uid="uid://2wuvpri2keyx" path="res://Gray.png" id="1_4toa7"]
+
+[sub_resource type="GDScript" id="GDScript_j57n3"]
+script/source = "extends CharacterBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	rotation += 10 * delta
+	pass
+"
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(55, 25)
+script = SubResource("GDScript_j57n3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(413, 272)
+texture = ExtResource("1_4toa7")
